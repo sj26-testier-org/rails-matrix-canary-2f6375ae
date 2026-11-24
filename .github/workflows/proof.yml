@@ -1,0 +1,21 @@
+name: Matrix proof
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [amber-17, violet-83]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - shell: bash
+        env:
+          TEST_VARIANT: ${{ matrix.variant }}
+        run: bash test-variant.sh
+  summary:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: echo MATRIX_SUMMARY_OK_2F63
